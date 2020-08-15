@@ -1,0 +1,265 @@
+#include<iostream.h>
+#include<conio.h>
+#include<process.h>
+class linkedlist
+{
+struct Node
+{
+int data;
+Node *ptr;
+};
+Node *head,*tail;
+public:
+linkedlist()
+{
+head=NULL;
+tail=NULL;
+}
+void create();
+void insertbegin();
+void insertend();
+void delbegin();
+void delend();
+void reverse();
+void insertloc();
+void delloc();
+void search();
+void display();
+};
+void linkedlist::create()
+{
+Node *temp=new Node();
+cout<<"enter the value of Data\n";
+cin>>temp->data;
+temp->ptr=NULL;
+if(head==NULL&&tail==NULL)
+{
+head=tail=temp;
+}
+tail->ptr=temp;
+tail=temp;
+}
+void linkedlist::insertbegin()
+{
+Node *temp=new Node();
+cout<<"enter the value for data\n";
+cin>>temp->data;
+temp->ptr=NULL;
+if(head==NULL&&tail==NULL)
+{
+head=tail=temp;
+}
+temp->ptr=head;
+head=temp;
+}
+void linkedlist::insertend()
+{
+Node *temp=new Node();
+cout<<"enter the Data to be inserted at the end\n";
+cin>>temp->data;
+temp->ptr=NULL;
+if(head==NULL&&tail==NULL)
+{
+head=tail=temp;
+}
+tail->ptr=temp;
+tail=temp;
+}
+void linkedlist::delbegin()
+{
+if(head==NULL)
+{
+cout<<"the list is empty\n";
+}
+Node *temp=new Node();
+temp=head;
+head=temp->ptr;
+delete temp;
+}
+
+void linkedlist::delend()
+{
+if(head==NULL)
+{
+cout<<"the list is empty\n";
+}
+Node *temp=new Node();
+temp=head;
+while(temp->ptr!=tail)
+{
+temp=temp->ptr;
+}
+Node *last=new Node();
+last=tail;
+tail=temp;
+tail->ptr=NULL;
+delete last;
+}
+void linkedlist::search()
+{
+int ele;
+cout<<"\nenter the data to be searched\n";
+cin>>ele;
+Node *temp=new Node();
+temp=head;
+int flag=0;
+while(temp!=NULL)
+{
+if(temp->data==ele)
+{
+ flag++;
+ }
+ temp=temp->ptr;
+}
+if(flag!=0)
+{
+cout<<"\nELEMENT FOUND\n";
+cout<<"\n No of times element is found: "<<flag<<endl;
+}
+else
+{
+cout<<"\nNot found\n";
+}
+}
+
+void linkedlist::reverse()
+{
+Node *prev,*current,*next;
+prev=NULL;
+current=head;
+while(current!=NULL)
+{
+next=current->ptr;
+current->ptr=prev;
+prev=current;
+current=next;
+}
+head=prev;
+}
+
+void linkedlist::insertloc()
+{
+int n1;
+cout<<"\nEnter the location for insertion\n";
+cin>>n1;
+if(n1==1)
+{
+insertbegin();
+}
+Node *temp=new Node();
+temp=head;
+for(int i=0;i<n1-2&&temp!=NULL;i++)
+{
+temp=temp->ptr;
+if(temp==tail)
+{
+insertend();
+}
+Node *temp1=new Node();
+cout<<"Enter the data \n";
+cin>>temp1->data;
+temp1->ptr=temp->ptr;
+temp->ptr=temp1;
+if(temp==tail)
+{
+tail=temp1;
+}
+}
+}
+void linkedlist::delloc()
+{
+int n1;
+cout<<"\nEnter the location for deletion\n";
+cin>>n1;
+if(n1==1)
+{
+delbegin();
+}
+Node *temp=new Node();
+temp=head;
+for(int i=0;i<n1-2&&temp!=NULL;i++)
+{
+temp=temp->ptr;
+if(temp==tail)
+{
+delend();
+}
+Node *temp1=new Node();
+temp1=temp->ptr;
+temp->ptr=temp1->ptr;
+temp1->ptr=NULL;
+delete temp1;
+}
+}
+void linkedlist::display()
+{
+Node *temp=new Node();
+if(head==NULL)
+{
+cout<<"empty\n";
+}
+else
+{
+temp=head;
+cout<<"\nDATA DISPLAYED\n";
+while(temp!=NULL)
+{
+cout<<temp->data<<"\t";
+temp=temp->ptr;
+}
+}
+}
+void main()
+{
+clrscr();
+int ch;
+
+linkedlist l1;
+do
+{
+cout<<"\nENTER YOUR CHOICE: \n1. to create \n2. to insert in the beginning\n3. to insert in the end\n4. to display\n5.to delete the element in the beginning\n6.to delete in the element in the end\n7.to search for an Element\n8.to reverse the list\n";
+cout<<"9.to Insert the Data at a specific loction\n10.to Delete the element at the specific location\n11.exit\n";
+cin>>ch;
+switch(ch)
+{
+case 1:
+l1.create();
+break;
+case 2:
+l1.insertbegin();
+break;
+case 3:
+l1.insertend();
+break;
+case 4:
+l1.display();
+break;
+case 5:
+l1.delbegin();
+break;
+case 6:
+l1.delend();
+break;
+case 7:
+l1.search();
+break;
+case 8:
+l1.reverse();
+break;
+case 9:
+l1.insertloc();
+break;
+case 10:
+l1.delloc();
+break;
+case 11:
+exit(0);
+break;
+}
+} while(ch!=0);
+getch();
+}
+
+
+
+
